@@ -1,4 +1,7 @@
 const path = require('path')
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+
 // rollup.config.js
 // 以下注释是为了能使用 VSCode 的类型提示
 /**
@@ -27,11 +30,14 @@ const buildOptions = {
   sourcemap: true,
   // 如果是打包出 iife/umd 格式，需要对外暴露出一个全局变量，通过 name 配置变量名
   name: 'MyBundle',
+	external: ['react', 'react-dom'],
   // 全局变量声明
   globals: {
     // 项目中可以直接用`$`代替`jquery`
     jquery: '$'
-  }
+  },
+	// 通过 plugins 参数添加插件
+	plugins: [resolve(), commonjs()],
 };
 
 export default buildOptions;
